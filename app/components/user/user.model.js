@@ -1,7 +1,5 @@
 const db = require('../../db/');
 const userModel = require('../../models/userModel');
-const resetPassModel = require('../../models/resetPassModel');
-const shadowUserModel = require('../../models/shadowUserModel');
 const logger = require('../../utils/logging');
 
 // TODO: Read all the columns and tables from model

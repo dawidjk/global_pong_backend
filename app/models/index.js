@@ -1,7 +1,9 @@
 const userModel = require('./userModel');
-const shadowUserModel = require('./shadowUserModel');
+const gpsModel = require('./gpsModel');
+const scoreModel = require('./scoreModel');
 
 module.exports = {
     userModel,
-    shadowUserModel,
+    gpsModel,
+    scoreModel
 };

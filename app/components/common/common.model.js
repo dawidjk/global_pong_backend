@@ -1,6 +1,4 @@
 const db = require('../../db/');
-const integrationServiceModel = require('../../models/integrationServiceModel');
-const historicalListingModel = require('../../models/historicalListingModel');
 
 
 exports.getVendors = function () {

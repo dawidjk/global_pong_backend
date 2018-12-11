@@ -1,0 +1,5 @@
+CREATE TABLE score (
+	score_id				bigserial CONSTRAINT score_id PRIMARY KEY,
+	coast					varchar(100) NOT NULL,
+	score					bigint NOT NULL
+);

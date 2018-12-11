@@ -1,0 +1,5 @@
+CREATE TABLE gps (
+	gps_id		bigserial CONSTRAINT gps_id PRIMARY KEY,
+	latitude	varchar(100) NOT NULL,
+	longitude	varchar(24) NOT NULL
+);

@@ -13,10 +13,10 @@ class Config {
 }
 
 class PostgresConfig {
-    getUser(){ return 'postgres' }
+    getUser(){ return 'gpsPong' }
     getHost(){ return 'localhost' } //localhost //'45.33.86.76' //'172.104.30.67'
-    getDatabase(){ return 'bachend_database' }
-    getPassword(){ return 'backend_password'  } // TODO: Encrypt the password
+    getDatabase(){ return 'gpsPong' }
+    getPassword(){ return 'gpsPong'  } // TODO: Encrypt the password
     getPort(){ return 5432 }
 }
 

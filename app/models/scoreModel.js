@@ -1,0 +1,8 @@
+const score = {
+    collectionName: 'gps_pong.score',
+    id: 'score_id',
+    coast: 'coast',
+    score: 'score'
+};
+
+module.exports = score;
