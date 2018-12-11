@@ -2,7 +2,7 @@ class Config {
     constructor(){
     }
     getPort(){
-        return process.env.port? process.env.port: 3000
+        return process.env.port? process.env.port: 7877
     }
     getPassportJWTSecretKey(){
         return 'AqBsU#092!883$MmUt';
