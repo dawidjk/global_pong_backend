@@ -76,8 +76,13 @@ exports.getAuthorization = function (req, res) {
                 logger.log('info', `${username} logged in successfully`);
                 console.log("finding user");
                 console.log(result);
-                if (result == null) {
-                    const user = {
+                responseService.send({
+                    status: responseService.getCode().codes.OK,
+                    data: result
+                }, res);
+            })
+            .catch((err) => {
+                const user = {
                         user_email: email,
                         user_password: '',
                         salt: _generateSalt(),
@@ -101,18 +106,6 @@ exports.getAuthorization = function (req, res) {
                                 data: err,
                             }, res);
                         });
-                }
-                responseService.send({
-                    status: responseService.getCode().codes.OK,
-                    data: result
-                }, res);
-            })
-            .catch((err) => {
-                logger.log('error', `${username} loggedin unsuccesful, wrong username/password`);
-                responseService.send({
-                    status: responseService.getCode().codes.UNAUTHORIZED,
-                    data: 'Wrong username and password',
-                }, res);
             });
     } else {
         responseService.send({
