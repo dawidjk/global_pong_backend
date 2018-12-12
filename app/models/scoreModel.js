@@ -1,5 +1,5 @@
 const score = {
-    collectionName: 'gpsPong.score',
+    collectionName: 'gps_pong.score',
     id: 'score_id',
     coast: 'coast',
     score: 'score'
