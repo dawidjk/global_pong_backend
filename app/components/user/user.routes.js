@@ -54,6 +54,12 @@ class UserRoute {
                 userController.getUserScore(req, res, next);
             },
         );
+        this.app.get(
+            '/api/getCoordinates',
+            (req, res, next) => {
+                userController.getCoordinates(req, res, next);
+            },
+        );
     }
 }
 

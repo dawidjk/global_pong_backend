@@ -225,6 +225,22 @@ exports.getUser = function (req, res) {
     }
 };
 
+exports.getCoordinates = function (req, res) {
+    User
+        .getCoordinates()
+            .then(result =>{
+                console.log(result);
+                responseService.send({
+                status: responseService.getCode().codes.OK,
+                data: result,
+            }, res)
+        })
+        .catch(err => responseService.send({
+            status: responseService.getCode().codes.FAILURE,
+            data: err,
+        }, res));
+};
+
 exports.registerUser = function (req, res) {
     const email = req.body.email || '';
     const password = req.body.password || '';
