@@ -51,7 +51,7 @@ function _updatePosition() {
                                         .then(result => {
                                             next();
                                         });
-                            } else if (parseFloat(coordinates.longitude) > 40 || parseFloat(coordinates.longitude) < 25) {
+                            } else if (parseFloat(coordinates.longitude) > 41 || parseFloat(coordinates.longitude) < 25) {
                                 User
                                     .updateVector(vector.hacc,  vector.h, -1*vector.vacc, -1*vector.v, parseInt(vector.itterations))
                                         .then(vector => {
