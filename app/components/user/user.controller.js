@@ -99,9 +99,10 @@ function _updatePosition() {
                                         });   
                             }
                             else {
+                                slow = 100;
                                 User
-                                    .setCoordinates(parseFloat(coordinates.latitude) + Math.pow(vector.hacc * parseInt(vector.itterations), 2)/10 + vector.h/10, 
-                                        parseFloat(coordinates.longitude) + Math.pow(vector.vacc * parseInt(vector.itterations), 2)/10 + vector.v/10)
+                                    .setCoordinates(parseFloat(coordinates.latitude) + Math.pow(vector.hacc * parseInt(vector.itterations), 2)/slow + vector.h/slow, 
+                                        parseFloat(coordinates.longitude) + Math.pow(vector.vacc * parseInt(vector.itterations), 2)/slow + vector.v/slow)
                                         .then(result => {
                                             User
                                                 .incrementVector(parseInt(vector.itterations) + 1)
