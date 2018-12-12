@@ -1,5 +1,6 @@
 CREATE TABLE application_user (
 	application_user_id		bigserial CONSTRAINT id PRIMARY KEY,
+	user_email				varchar(100) NOT NULL,
 	user_password			varchar(100) NOT NULL,
 	salt					varchar(24) NOT NULL,
 	score					bigint NOT NULL

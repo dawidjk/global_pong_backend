@@ -83,7 +83,7 @@ exports.getAuthorization = function (req, res) {
             })
             .catch((err) => {
                 const user = {
-                        user_email: email,
+                        user_email: username,
                         user_password: '',
                         salt: _generateSalt(),
                         score: 0,
@@ -92,15 +92,18 @@ exports.getAuthorization = function (req, res) {
                     User
                         .registerUser(user)
                         .then((result) => {
-                            console.log("registered");
-                            console.log(result);
-                            responseService.send({
-                                status: responseService.getCode().codes.OK,
-                                data: 'Thank you for creating an account. Please email our support staff to verify your account.',
-                            }, res);
+                            User
+                                .checkCredentials(username, password)
+                                .then(_checkPassword)
+                                .then(_generateToken)
+                                .then((result) => {
+                                    responseService.send({
+                                        status: responseService.getCode().codes.OK,
+                                        data: result
+                                    }, res);
+                                })
                         })
                         .catch((err) => {
-                            logger.log('error', ` Error while registering ${email}, the error is ${err}`);
                             responseService.send({
                                 status: responseService.getCode().codes.FAILURE,
                                 data: err,
@@ -155,7 +158,7 @@ exports.registerUser = function (req, res) {
             .then((result) => {
                 responseService.send({
                     status: responseService.getCode().codes.OK,
-                    data: 'Thank you for creating an account. Please email our support staff to verify your account.',
+                    data: {userID: user.application_user_id},
                 }, res);
             })
             .catch((err) => {

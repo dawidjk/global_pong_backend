@@ -1,5 +1,5 @@
 const gps = {
-    collectionName: 'gps_pong.gps',
+    collectionName: 'gps',
     id: 'gps_id',
     lat: 'latitude',
     lon: 'longitude'
