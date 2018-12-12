@@ -41,13 +41,10 @@ function _updatePosition() {
         User
         .getVector()
             .then(vector =>{
-                vector.h /= 100;
-                vector.v /= 100;
-                vector.hacc /= 100;
-                vector.vacc /= 100;
                 User
                     .getCoordinates()
                         .then(coordinates =>{
+                            console.log(coordinates);
                             if (coordinates == undefined) {
                                 User
                                     .setCoordinates(-98.5795, 39.8283)
@@ -66,10 +63,6 @@ function _updatePosition() {
                                             if (vector.vacc != 0) {
                                                 vsign = (vector.vacc/vector.vacc)
                                             }
-                                            vector.h /= 100;
-                                            vector.v /= 100;
-                                            vector.hacc /= 100;
-                                            vector.vacc /= 100;
                                             User
                                             .setCoordinates(parseFloat(coordinates.latitude) + hsign * Math.pow(vector.hacc * parseInt(vector.itterations), 2) + vector.h, 
                                                 parseFloat(coordinates.longitude) + vsign* Math.pow(vector.vacc * parseInt(vector.itterations), 2) + vector.v)
@@ -107,8 +100,8 @@ function _updatePosition() {
                             }
                             else {
                                 User
-                                    .setCoordinates(parseFloat(coordinates.latitude) + Math.pow(vector.hacc * parseInt(vector.itterations), 2) + vector.h, 
-                                        parseFloat(coordinates.longitude) + Math.pow(vector.vacc * parseInt(vector.itterations), 2) + vector.v)
+                                    .setCoordinates(parseFloat(coordinates.latitude) + Math.pow(vector.hacc * parseInt(vector.itterations), 2)/10 + vector.h/10, 
+                                        parseFloat(coordinates.longitude) + Math.pow(vector.vacc * parseInt(vector.itterations), 2)/10 + vector.v/10)
                                         .then(result => {
                                             User
                                                 .incrementVector(parseInt(vector.itterations) + 1)
