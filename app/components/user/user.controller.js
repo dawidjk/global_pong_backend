@@ -75,7 +75,7 @@ function _updatePosition() {
                                                 });
                                         });   
                             }
-                            else if (parseFloat(coordinates.latitude) > -66.9513812 || parseFloat(coordinates.latitude) < -124.784407) {
+                            else if (parseFloat(coordinates.latitude) > -70 || parseFloat(coordinates.latitude) < -120) {
                                 User
                                     .updateVector(0, 1, 0, 1, 0)
                                         .then(vector => {
