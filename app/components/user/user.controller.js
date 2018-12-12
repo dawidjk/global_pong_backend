@@ -41,6 +41,10 @@ function _updatePosition() {
         User
         .getVector()
             .then(vector =>{
+                vector.h /= 100;
+                vector.v /= 100;
+                vector.hacc /= 100;
+                vector.vacc /= 100;
                 User
                     .getCoordinates()
                         .then(coordinates =>{
@@ -62,6 +66,10 @@ function _updatePosition() {
                                             if (vector.vacc != 0) {
                                                 vsign = (vector.vacc/vector.vacc)
                                             }
+                                            vector.h /= 100;
+                                            vector.v /= 100;
+                                            vector.hacc /= 100;
+                                            vector.vacc /= 100;
                                             User
                                             .setCoordinates(parseFloat(coordinates.latitude) + hsign * Math.pow(vector.hacc * parseInt(vector.itterations), 2) + vector.h, 
                                                 parseFloat(coordinates.longitude) + vsign* Math.pow(vector.vacc * parseInt(vector.itterations), 2) + vector.v)
