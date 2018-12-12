@@ -172,7 +172,20 @@ exports.incrementVector = function (iteration) {
         SET itterations = ${iteration}`;
         db.query(queryString, (err, res) => {
             if (err) {
-                logger.log('error', ` updateUser - ${applicationUserId} - ${err}`);
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
+            }
+        });
+    }));
+};
+
+exports.victor = function (coast) {
+    return new Promise(((resolve, reject) => {
+        const queryString = `UPDATE score
+        SET score = score + 1 WHERE coast = '${coast}'`;
+        db.query(queryString, (err, res) => {
+            if (err) {
                 reject(err);
             } else {
                 resolve(res.rows[0]);
@@ -187,7 +200,19 @@ exports.updateVector = function (hAcc, h, vAcc, v, iteration) {
         SET hacc = ${hAcc}, h = ${h}, vacc = ${vAcc}, v = ${v}, itterations = ${iteration} RETURNING *`;
         db.query(queryString, (err, res) => {
             if (err) {
-                logger.log('error', ` updateUser - ${applicationUserId} - ${err}`);
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
+            }
+        });
+    }));
+};
+
+exports.deleteCoordinates = function () {
+    return new Promise(((resolve, reject) => {
+        const queryString = `DELETE FROM gps`;
+        db.query(queryString, (err, res) => {
+            if (err) {
                 reject(err);
             } else {
                 resolve(res.rows[0]);

@@ -56,15 +56,46 @@ function _updatePosition() {
                                 User
                                     .updateVector(vector.hacc,  vector.h, -1*vector.vacc, -1*vector.v, parseInt(vector.itterations))
                                         .then(vector => {
+                                            hsign = 1;
+                                            vsign = 1;
+                                            if (vector.hacc != 0) {
+                                                hsign = (vector.hacc/vector.hacc)
+                                            }
+                                            if (vector.vacc != 0) {
+                                                vsign = (vector.vacc/vector.vacc)
+                                            }
                                             User
-                                            .setCoordinates(parseFloat(coordinates.latitude) + (vector.hacc/vector.hacc) * Math.pow(vector.hacc * parseInt(vector.itterations), 2) + vector.h, 
-                                                parseFloat(coordinates.longitude) + (vector.vacc/vector.vacc)* Math.pow(vector.vacc * parseInt(vector.itterations), 2) + vector.v)
+                                            .setCoordinates(parseFloat(coordinates.latitude) + hsign * Math.pow(vector.hacc * parseInt(vector.itterations), 2) + vector.h, 
+                                                parseFloat(coordinates.longitude) + vsign* Math.pow(vector.vacc * parseInt(vector.itterations), 2) + vector.v)
                                                 .then(result => {
                                                     User
                                                         .incrementVector(parseInt(vector.itterations) + 1)
                                                             .then(result => {
                                                                 next();
                                                             });
+                                                });
+                                        });   
+                            }
+                            else if (parseFloat(coordinates.latitude) > -66.9513812 || parseFloat(coordinates.latitude) < -124.784407) {
+                                User
+                                    .updateVector(0, 1, 0, 1, 0)
+                                        .then(vector => {
+                                            User
+                                            .deleteCoordinates()
+                                                .then(result => {
+                                                    if (parseFloat(coordinates.latitude) > -66.9513812) {
+                                                        User
+                                                        .victor("west")
+                                                            .then(result => {
+                                                                next();
+                                                            });
+                                                    } else {
+                                                        User
+                                                        .victor("east")
+                                                            .then(result => {
+                                                                next();
+                                                            });
+                                                    }
                                                 });
                                         });   
                             }
