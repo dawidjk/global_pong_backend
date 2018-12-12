@@ -176,3 +176,22 @@ exports.registerUser = function (req, res) {
     }
 };
 
+exports.getCoastScore = function (req, res) {
+    User
+        .getCoastScore()
+        .then((result) => {
+            console.log(result);
+            responseService.send({
+                status: responseService.getCode().codes.OK,
+                data: result,
+            }, res);
+        })
+        .catch((err) => {
+            responseService.send({
+                status: responseService.getCode().codes.FAILURE,
+                data: err,
+            }, res);
+        });
+};
+
+

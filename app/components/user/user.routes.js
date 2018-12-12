@@ -42,6 +42,12 @@ class UserRoute {
                 userController.forgotPassword(req, res, next);
             },
         );
+        this.app.get(
+            '/api/getCoastScore',
+            (req, res, next) => {
+                userController.getCoastScore(req, res, next);
+            },
+        );
     }
 }
 

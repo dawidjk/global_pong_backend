@@ -1,5 +1,6 @@
 const db = require('../../db/');
 const userModel = require('../../models/userModel');
+const scoreModel = require('../../models/scoreModel');
 const logger = require('../../utils/logging');
 
 // TODO: Read all the columns and tables from model
@@ -14,6 +15,20 @@ exports.getUser = function (applicationUserId) {
                 reject(err);
             } else {
                 resolve(res.rows[0]);
+            }
+        });
+    }));
+};
+
+exports.getCoastScore = function () {
+    return new Promise(((resolve, reject) => {
+        const queryString = `SELECT *
+         FROM ${scoreModel.collectionName}`;
+        db.query(queryString, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res.rows);
             }
         });
     }));
