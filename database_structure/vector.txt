@@ -1,0 +1,8 @@
+CREATE TABLE vector (
+	vector_id				bigserial CONSTRAINT vector_id PRIMARY KEY,
+	hAcc					int NOT NULL,
+	h						int NOT NULL,
+	vAcc					int NOT NULL,
+	v						int NOT NULL,
+	itterations				bigint NOT NULL
+);

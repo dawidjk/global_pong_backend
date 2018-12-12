@@ -36,6 +36,58 @@ function _generateSalt() {
     return crypto.randomBytes(16).toString('base64');
 }
 
+function _updatePosition() {
+    async.forever(function(next) {
+        User
+        .getVector()
+            .then(vector =>{
+                User
+                    .getCoordinates()
+                        .then(coordinates =>{
+                            if (coordinates == undefined) {
+                                User
+                                    .setCoordinates(-98.5795, 39.8283)
+                                        .then(result => {
+                                            console.log(result);
+                                            console.log("*********");
+                                            next();
+                                        });
+                            } else if (parseFloat(coordinates.longitude) > 49.3457868 || parseFloat(coordinates.longitude) < 24.7433195) {
+                                User
+                                    .updateVector(vector.hacc,  vector.h, -1*vector.vacc, -1*vector.v, parseInt(vector.itterations))
+                                        .then(vector => {
+                                            User
+                                            .setCoordinates(parseFloat(coordinates.latitude) + (vector.hacc/vector.hacc) * Math.pow(vector.hacc * parseInt(vector.itterations), 2) + vector.h, 
+                                                parseFloat(coordinates.longitude) + (vector.vacc/vector.vacc)* Math.pow(vector.vacc * parseInt(vector.itterations), 2) + vector.v)
+                                                .then(result => {
+                                                    User
+                                                        .incrementVector(parseInt(vector.itterations) + 1)
+                                                            .then(result => {
+                                                                next();
+                                                            });
+                                                });
+                                        });   
+                            }
+                            else {
+                                User
+                                    .setCoordinates(parseFloat(coordinates.latitude) + Math.pow(vector.hacc * parseInt(vector.itterations), 2) + vector.h, 
+                                        parseFloat(coordinates.longitude) + Math.pow(vector.vacc * parseInt(vector.itterations), 2) + vector.v)
+                                        .then(result => {
+                                            User
+                                                .incrementVector(parseInt(vector.itterations) + 1)
+                                                    .then(result => {
+                                                        next();
+                                                    });
+                                        });
+                                                    }
+                    })
+                    .catch(err => console.log(err));
+                })
+        .catch(err => console.log(err));
+    });
+}
+_updatePosition();
+
 function _encryptPassword(userPassword, salt) {
     if (!userPassword || !salt) {
         return '';

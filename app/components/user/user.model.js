@@ -1,6 +1,7 @@
 const db = require('../../db/');
 const userModel = require('../../models/userModel');
 const scoreModel = require('../../models/scoreModel');
+const gpsModel = require('../../models/gpsModel');
 const logger = require('../../utils/logging');
 
 // TODO: Read all the columns and tables from model
@@ -29,6 +30,34 @@ exports.getCoastScore = function () {
                 reject(err);
             } else {
                 resolve(res.rows);
+            }
+        });
+    }));
+};
+
+exports.getVector = function () {
+    return new Promise(((resolve, reject) => {
+        const queryString = `SELECT *
+         FROM vector`;
+        db.query(queryString, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
+            }
+        });
+    }));
+};
+
+exports.getCoordinates = function () {
+    return new Promise(((resolve, reject) => {
+        const queryString = `SELECT *
+         FROM ${gpsModel.collectionName} ORDER BY ${gpsModel.id} DESC LIMIT 1`;
+        db.query(queryString, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
             }
         });
     }));
@@ -104,12 +133,58 @@ exports.registerUser = function (user) {
     }));
 };
 
+exports.setCoordinates = function (lat, lon) {
+    return new Promise(((resolve, reject) => {
+        const queryString = `INSERT INTO ${gpsModel.collectionName}(
+         ${gpsModel.lat},${gpsModel.lon})
+         VALUES(${lat}, ${lon}) RETURNING *`;
+         console.log(queryString);
+        db.query(queryString, (err, res) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
+            }
+        });
+    }));
+};
+
 exports.updatePassword = function (applicationUserId, password, salt, updatedAt) {
     return new Promise(((resolve, reject) => {
         const queryString = `UPDATE ${userModel.collectionName} 
         SET ${userModel.password} = '${password}', ${userModel.salt} = '${salt}', ${userModel.updatedAt} = '${updatedAt}'
         WHERE ${userModel.id} = ${applicationUserId} 
         AND ${userModel.isActive} is true`;
+        db.query(queryString, (err, res) => {
+            if (err) {
+                logger.log('error', ` updateUser - ${applicationUserId} - ${err}`);
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
+            }
+        });
+    }));
+};
+exports.incrementVector = function (iteration) {
+    return new Promise(((resolve, reject) => {
+        const queryString = `UPDATE vector
+        SET itterations = ${iteration}`;
+        db.query(queryString, (err, res) => {
+            if (err) {
+                logger.log('error', ` updateUser - ${applicationUserId} - ${err}`);
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
+            }
+        });
+    }));
+};
+
+exports.updateVector = function (hAcc, h, vAcc, v, iteration) {
+    return new Promise(((resolve, reject) => {
+        const queryString = `UPDATE vector
+        SET hacc = ${hAcc}, h = ${h}, vacc = ${vAcc}, v = ${v}, itterations = ${iteration} RETURNING *`;
         db.query(queryString, (err, res) => {
             if (err) {
                 logger.log('error', ` updateUser - ${applicationUserId} - ${err}`);
