@@ -48,8 +48,6 @@ function _updatePosition() {
                                 User
                                     .setCoordinates(-98.5795, 39.8283)
                                         .then(result => {
-                                            console.log(result);
-                                            console.log("*********");
                                             next();
                                         });
                             } else if (parseFloat(coordinates.longitude) > 49.3457868 || parseFloat(coordinates.longitude) < 24.7433195) {

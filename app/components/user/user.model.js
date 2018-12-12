@@ -120,7 +120,6 @@ exports.registerUser = function (user) {
         const queryString = `INSERT INTO ${userModel.collectionName}(
          ${userModel.password},${userModel.email}, ${userModel.salt}, ${userModel.score})
          VALUES('${user.user_password}', '${user.user_email}', '${user.salt}', 0) RETURNING *`;
-         console.log(queryString);
         db.query(queryString, (err, res) => {
             if (err) {
                 console.log(err);
@@ -138,7 +137,6 @@ exports.setCoordinates = function (lat, lon) {
         const queryString = `INSERT INTO ${gpsModel.collectionName}(
          ${gpsModel.lat},${gpsModel.lon})
          VALUES(${lat}, ${lon}) RETURNING *`;
-         console.log(queryString);
         db.query(queryString, (err, res) => {
             if (err) {
                 console.log(err);
