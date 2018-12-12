@@ -11,6 +11,7 @@ whiteListUrls.set('/api/user/loginFail', true);
 whiteListUrls.set('/api/user', true);
 whiteListUrls.set('/isServerUp', true);
 whiteListUrls.set('/api/forgot', true);
+whiteListUrls.set('/api/getCoastScore', true);
 
 
 // TODO:
