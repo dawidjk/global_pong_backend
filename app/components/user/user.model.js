@@ -34,6 +34,20 @@ exports.getCoastScore = function () {
     }));
 };
 
+exports.getUserScore = function () {
+    return new Promise(((resolve, reject) => {
+        const queryString = `SELECT score
+         FROM ${userModel.collectionName}`;
+        db.query(queryString, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res.rows[0]);
+            }
+        });
+    }));
+};
+
 exports.getUserByEmail = function (userEmail) {
     return new Promise(((resolve, reject) => {
         const queryString = `SELECT ${userModel.id}

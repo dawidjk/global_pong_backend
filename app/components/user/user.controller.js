@@ -194,4 +194,30 @@ exports.getCoastScore = function (req, res) {
         });
 };
 
+exports.getUserScore = function (req, res) {
+    const userId = req.query.userId || '';
+    if (userId) {
+        User
+        .getUserScore(userId)
+        .then((result) => {
+            console.log(result);
+            responseService.send({
+                status: responseService.getCode().codes.OK,
+                data: result,
+            }, res);
+        })
+        .catch((err) => {
+            responseService.send({
+                status: responseService.getCode().codes.FAILURE,
+                data: err,
+            }, res);
+        });
+    } else {
+        responseService.send({
+                status: responseService.getCode().codes.FAILURE,
+                data: "UserId not provided",
+            }, res);
+    }
+};
+
 

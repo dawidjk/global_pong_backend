@@ -48,6 +48,12 @@ class UserRoute {
                 userController.getCoastScore(req, res, next);
             },
         );
+        this.app.get(
+            '/api/getUserScore',
+            (req, res, next) => {
+                userController.getUserScore(req, res, next);
+            },
+        );
     }
 }
 
